@@ -1,0 +1,8 @@
+<table class="table table-hover">
+    <tr *ngFor="let app of service.list">
+        <td (click)="populateForm(app)">{{app.nome}}</td>
+        <td (click)="populateForm(app)">{{app.tipo}}</td>
+        <td><button (click)="openDialog(app.id)" class="btn btn-sm btn-outline-warning">Usuários</button></td>
+        <td><button (click)="onDelete(app.id)" class="btn btn-sm btn-outline-danger">X</button></td>
+    </tr>
+</table>

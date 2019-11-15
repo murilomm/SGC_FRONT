@@ -1,0 +1,51 @@
+<h2 mat-dialog-title>{{ title }}</h2>
+
+
+<mat-dialog-content [formGroup]="form">
+
+    <div class="row">
+        <div class="col-md-5">
+            <mat-selection-list #usuariosDisponiveis>
+                <mat-list-option *ngFor="let usuario of service.listaUsuariosDisponiveis" [value]="usuario.Id">
+                    {{ usuario.nome }}
+                </mat-list-option>
+            </mat-selection-list>
+            
+            <p>
+                Options selected: {{usuariosDisponiveis.selectedOptions.selected.length}}
+            </p>
+        </div>
+
+        <div class="col-md-2">
+            <i class="material-icons">arrow_forward</i>
+            <i class="material-icons">arrow_back</i>
+        </div>
+
+        <div class="col-md-5">
+            <mat-selection-list #usuariosSelecionados>
+                <mat-list-option *ngFor="let usuario of service.listaUsuariosSelecionados" [value]="usuario.Id">
+                    {{ usuario.nome }}
+                </mat-list-option>
+            </mat-selection-list>
+            
+            <p>
+                Options selected: {{usuariosSelecionados.selectedOptions.selected.length}}
+            </p>
+        </div>
+    </div>
+
+</mat-dialog-content>
+
+<mat-dialog-actions>
+
+    <button class="mat-raised-button"
+            (click)="close()">
+        Close
+    </button>
+
+    <button class="mat-raised-button mat-primary"
+            (click)="save()">
+        Save
+    </button>
+
+</mat-dialog-actions>
