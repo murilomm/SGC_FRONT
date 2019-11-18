@@ -48,7 +48,7 @@ export class AppAdminComponent implements OnInit {
 
   insertRecord(form: NgForm) {
     this.service.adicionar(form.value).subscribe(res => {
-      this.toastr.success('Adicionado com sucesso', 'Apps');
+      this.toastr.success('Adicionado com sucesso!', 'Apps');
       this.resetForm();
       this.service.atualizaLista();
     });
@@ -56,7 +56,7 @@ export class AppAdminComponent implements OnInit {
 
   updateRecord(form: NgForm) {
     this.service.atualizar(form.value).subscribe(res => {
-      this.toastr.info('Atualizado com sucesso', 'Apps');
+      this.toastr.info('Atualizado com sucesso!', 'Apps');
       this.resetForm();
       this.service.atualizaLista();
     });

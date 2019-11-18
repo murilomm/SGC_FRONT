@@ -38,10 +38,12 @@ export class AppListComponent implements OnInit {
 
     dialogConfig.disableClose = true;
     dialogConfig.autoFocus = true;
+    dialogConfig.minWidth = 1000;
+    dialogConfig.minHeight = 500;
 
     dialogConfig.data = {
         appId: appId,
-        title: 'Usuários'
+        title: 'Apps | Usuários'
     };
 
     this.dialog.open(AppUsuarioComponent, dialogConfig);

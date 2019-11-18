@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
-import { HttpClient, HttpHeaders } from "@angular/common/http";
+import { HttpClient, HttpHeaders, HttpParams } from "@angular/common/http";
 import { Usuario } from '../models/usuario.model';
 import { AppUsuario } from '../models/app-usuario.model';
 
@@ -11,37 +11,59 @@ export class AppUsuarioService {
 
   listaUsuariosDisponiveis: Usuario[];
   listaUsuariosSelecionados: Usuario[];
+  header: HttpHeaders;
   
   readonly rootURL ="http://localhost:49975";
-
-  constructor(private http : HttpClient) { }
-
-  atualizaListas(appId) {
-    this.atualizaUsuariosDisponiveis(appId);
-    this.atualizaUsuariosSelecionados(appId);
+  
+  constructor(private http : HttpClient) { 
+    this.header = new HttpHeaders();
+    this.header.append('Content-Type', 'application/json');
   }
 
-  atualizaUsuariosDisponiveis(appId){
+  atualizaListas(appId) {
+    this.atualizarUsuariosDisponiveis(appId);
+    this.atualizarUsuariosSelecionados(appId);
+  }
+
+  atualizarUsuariosDisponiveis(appId){
     this.http.get(this.rootURL + '/AppUsuario/BuscarUsuariosDisponiveis/' + appId)
     .toPromise().then(res => this.listaUsuariosDisponiveis = res as Usuario[]);
   }
 
-  atualizaUsuariosSelecionados(appId){
+  atualizarUsuariosSelecionados(appId){
     this.http.get(this.rootURL + '/AppUsuario/BuscarUsuariosSelecionados/' + appId)
     .toPromise().then(res => this.listaUsuariosSelecionados = res as Usuario[]);
   }
 
-  
+  salvarSelecionados(appId: number) {
 
-  // adicionar(formData : Usuario){
-  //   return this.http.post(this.rootURL + '/Usuario/', formData);
-  // }
+    var selecionados = JSON.stringify(this.listaUsuariosSelecionados);
 
-  // atualizar(formData : Usuario){
-  //   return this.http.put(this.rootURL + '/Usuario/', formData);  
-  // }
+    return this.http.put(this.rootURL + '/AppUsuario/AtualizarAssociacao/', 
+    {
+      usuarios: selecionados,
+      appId: appId, 
+      usuarioSelecionado: true 
+    },
+    {
+      headers: new HttpHeaders({
+      'Content-Type': 'application/json'
+    })});
+  }
 
-  // remover(id : number){
-  //   return this.http.delete(this.rootURL + '/Usuario/' + id);
-  // }
+  salvarDisponiveis(appId: number) {
+
+    var disponiveis = JSON.stringify(this.listaUsuariosDisponiveis);
+
+    return this.http.put(this.rootURL + '/AppUsuario/AtualizarAssociacao/', 
+    { 
+      usuarios: disponiveis, 
+      appId: appId, 
+      usuarioSelecionado: false 
+    },
+    {
+      headers: new HttpHeaders({
+      'Content-Type': 'application/json'
+    })});
+  }  
 }

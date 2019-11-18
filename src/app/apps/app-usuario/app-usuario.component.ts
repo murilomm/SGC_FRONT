@@ -1,5 +1,5 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material";
+import { MAT_DIALOG_DATA, MatDialogRef, MatListOption } from "@angular/material";
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { ngModuleJitUrl } from '@angular/compiler';
 import { Usuario } from 'src/app/models/usuario.model';
@@ -36,11 +36,44 @@ export class AppUsuarioComponent implements OnInit {
     this.service.atualizaListas(this.appId);
   }
 
-  save() {
+  adicionaSelecionados(itens: MatListOption[]) {
+    var index: number;
+    var usuarios = itens.map(s => s.value);
+
+    usuarios.forEach(usuario => {
+      index = this.service.listaUsuariosDisponiveis.indexOf(usuario);
+      
+      this.service.listaUsuariosDisponiveis.splice(index, 1);      
+      this.service.listaUsuariosSelecionados.push(usuario);  
+    });
+  }
+
+  removeSelecionados(itens: MatListOption[]) {
+    var index: number;
+    var usuarios: Usuario[] = itens.map(s => s.value);
+
+    usuarios.forEach(usuario => {
+      index = this.service.listaUsuariosSelecionados.indexOf(usuario);      
+      this.service.listaUsuariosSelecionados.splice(index, 1);
+      
+      this.service.listaUsuariosDisponiveis.push(usuario);
+    });
+  }
+
+  salvarAlteracoes() {
+    this.service.salvarSelecionados(this.appId).subscribe(res => {
+      this.service.atualizaListas(this.appId);
+    });
+
+    this.service.salvarDisponiveis(this.appId).subscribe(res => {
+      this.service.atualizaListas(this.appId);
+    });
+
+    this.toastr.success('Atualizado(s) com sucesso!', 'Apps - Usuários');
     this.dialogRef.close(this.form.value);
   }
 
-  close() {
+  fechar() {
     this.dialogRef.close();
   }
 
