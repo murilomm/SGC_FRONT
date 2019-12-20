@@ -2,10 +2,12 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule, FormsModule } from "@angular/forms";
 import { HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http";
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { CpfCnpjModule } from 'ng2-cpf-cnpj';
+import { ShowHidePasswordModule } from 'ngx-show-hide-password';
+import { NgxMaskModule, IConfig } from 'ngx-mask';
+export const options: Partial<IConfig> | (() => Partial<IConfig>) = null;
 
 import {
   MatButtonModule,
@@ -19,7 +21,9 @@ import {
   MatNativeDateModule,
   MatDatepickerModule,
   MatDialogModule,
-  MatListModule
+  MatListModule,
+  MatProgressSpinnerModule,
+  MatInputModule
 } from '@angular/material';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -42,6 +46,7 @@ import { TerceiroAdminComponent } from './terceiros/terceiro-admin/terceiro-admi
 import { TerceiroListComponent } from './terceiros/terceiro-list/terceiro-list.component';
 import { AppUsuarioComponent } from './apps/app-usuario/app-usuario.component';
 import { AppUsuarioService } from './services/app-usuario.service';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -68,8 +73,6 @@ import { AppUsuarioService } from './services/app-usuario.service';
     HttpClientModule,
     ReactiveFormsModule,
     ToastrModule.forRoot(),
-    BrowserAnimationsModule,
-    NoopAnimationsModule,
     MatButtonModule,
     MatMenuModule,
     MatToolbarModule,
@@ -82,7 +85,15 @@ import { AppUsuarioService } from './services/app-usuario.service';
     MatNativeDateModule,
     MatDialogModule,
     NgbModule,
-    MatListModule
+    MatListModule,
+    MatInputModule,
+    MatProgressSpinnerModule,
+    NgxMaskModule.forRoot({
+      showMaskTyped : true,
+    }),
+    BrowserAnimationsModule,
+    CpfCnpjModule,
+    ShowHidePasswordModule
   ],
   providers: [
     LoginService,

@@ -10,6 +10,7 @@ import { TerceirosComponent } from './terceiros/terceiros.component';
 
 
 const routes: Routes = [
+  { path: '', component: LoginComponent },
   { path: 'login', component: LoginComponent },
   { path: 'home', component: HomeComponent, canActivate: [AuthGuard] },
   { path: 'usuario', component: UsuariosComponent, canActivate: [AuthGuard] },
