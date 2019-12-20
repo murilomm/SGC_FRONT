@@ -3,7 +3,7 @@
         <mat-card-title>Banco ABC</mat-card-title>
     </mat-card-header>
     <mat-card-content>
-        <form class="example-form">
+        <form class="example-form" #form='ngForm' autocomplete="off" (submit)="onSubmit(form)">
             <table class="example-full-width" cellspacing="0">
                 <tr>
                     <td>
@@ -22,7 +22,7 @@
                 <tr>
                     <td>
                         <mat-form-field class="example-full-width">
-                            <input id="mysecretpassword" matInput placeholder="Senha" [(ngModel)]="senha" #senhaInput="ngModel" type="password" name="Senha" maxlength="20" required showHideInput>
+                            <input id="mysecretpassword" matInput placeholder="Senha" [(ngModel)]="senha" #senhaInput="ngModel" type="password" name="senha" maxlength="20" required showHideInput>
                             
                             <i matSuffix
                             class="material-icons"
@@ -36,10 +36,9 @@
                     </td>
                 </tr>
             </table>
+
+            <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid">Login</button>
         </form>
         <mat-spinner [style.display]="showSpinner ? 'block' : 'none'"></mat-spinner>
     </mat-card-content>
-    <mat-card-actions>
-      <button mat-raised-button color="primary">Login</button>
-    </mat-card-actions>
 </mat-card>
